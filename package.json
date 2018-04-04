@@ -1,6 +1,6 @@
 {
   "name": "mongopose",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "functional programming for mongoose",
   "dependencies": {},
   "scripts": {
