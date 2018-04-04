@@ -16,13 +16,37 @@ function pluralize(string) {
 }
 
 /**
- *
- * @param model
- * @return {{compose: Function, findById: Function, findOne: Function, find: Function, update: Function, Params: Params}}
+ * @type {{model: (function(Model)), compose: (function(...[Function]): function(Params): Promise), Params: Function}}
  */
-module.exports = model => {
-    const singular = model.modelName.toLowerCase()
-    const plural = pluralize(model.modelName)
-    const {compose, findOne, find, findById, update} = functors(model, singular, plural)
-    return {compose, findOne, find, findById, update, Params}
+module.exports = {
+    /**
+     * @param model
+     * @return {{findById: Function, findOne: Function, find: Function, update: Function}}
+     */
+    model: model => {
+        const singular = model.modelName.toLowerCase()
+        const plural = pluralize(model.modelName)
+        const {findOne, find, findById, update} = functors(model, singular, plural)
+        return {findOne, find, findById, update}
+    },
+
+    /**
+     * async compose function
+     * @param funcs {...Function}
+     * @return {Function}
+     */
+    compose: (...funcs) => params => (
+        funcs.reduce(
+            (acc, val) => acc.then(val),
+            Promise.resolve(params)
+        )
+    ),
+
+    /**
+     * Params factory
+     * @param obj
+     * @return {Params}
+     */
+    Params: Params,
 }
+

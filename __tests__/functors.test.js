@@ -1,9 +1,9 @@
-const mongoopose = require('../index')
 const mongoose = require('mongoose')
 const userSchema = require('./schema')
 const UserModel = mongoose.model('User', userSchema)
-const {compose, findOne, find, Params} = mongoopose(UserModel)
 
+const {compose, Params, model: mongoopose} = require('../index')
+const {findOne, find} = mongoopose(UserModel)
 
 const printToConsole = (params, done) => {
     console.log(JSON.stringify(params, null, 2))
