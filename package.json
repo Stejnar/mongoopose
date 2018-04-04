@@ -1,6 +1,7 @@
 {
   "name": "mongopose",
   "version": "0.0.1",
+  "description": "functional programming for mongoose",
   "dependencies": {},
   "scripts": {
     "test": "mocha ./__tests__"
@@ -9,5 +10,13 @@
     "bcrypt": "^1.0.3",
     "mocha": "^5.0.5",
     "mongoose": "^5.0.12"
-  }
+  },
+  "keywords": [
+    "functional programming",
+    "composition",
+    "mongoose"
+  ],
+  "author": "Armin Butkereit",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "repository": "https://github.com/Stejnar/mongoopose.git"
 }

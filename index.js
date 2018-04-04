@@ -3,13 +3,13 @@ const Params = require('./lib/params')
 
 /**
  * simply pluralize a string
- * @param string {string}
- * @return {string}
+ * @param string {String}
+ * @return {String}
  */
 function pluralize(string) {
-    const upper = string.toUpperCase()
-    const lastChar = upper.length - 1
-    if (upper.indexOf('Y') !== -1 && upper[lastChar] === 'Y')
+    string = string.toLowerCase()
+    const lastChar = string.length - 1
+    if (string.indexOf('Y') !== -1 && string[lastChar] === 'Y')
         return string.substr(0, lastChar) + 'ies'
     else
         return string + 's'
@@ -18,18 +18,11 @@ function pluralize(string) {
 /**
  *
  * @param model
- * @return {{
- *  compose: Function,
- *  findOne: Function,
- *  find: Function,
- *  findById: Function,
- *  update: Function,
- *  Params: Params
- * }}
+ * @return {{compose: Function, findById: Function, findOne: Function, find: Function, update: Function, Params: Params}}
  */
 module.exports = model => {
     const singular = model.modelName.toLowerCase()
-    const plural = pluralize(model.modelName.toLowerCase())
+    const plural = pluralize(model.modelName)
     const {compose, findOne, find, findById, update} = functors(model, singular, plural)
     return {compose, findOne, find, findById, update, Params}
 }
