@@ -5,10 +5,23 @@ const UserModel = mongoose.model('User', userSchema)
 const {compose, findOne, find, Params} = mongoopose(UserModel)
 
 
+const printToConsole = (params, done) => {
+    // console.log(JSON.stringify(params, null, 2))
+    done()
+}
+
+
+const runPipeline = (pipeline, done) => 
+    pipeline(Params())
+        .then(params => printToConsole(params, done)
+        .catch(err => done(err))
+
+
 beforeEach('connect to db', () => {
     const conn = mongoose.connect('mongodb://127.0.0.1:4001/chat')
 })
 
+              
 describe('functors test', () => {
     it('findOne', (done) => {
         const pipeline = compose(
@@ -17,12 +30,7 @@ describe('functors test', () => {
                 as: 'contact'
             }))
         )
-        pipeline(Params())
-            .then((params) => {
-                // console.log(JSON.stringify(params, null, 2))
-                done()
-            })
-            .catch(err => done(err))
+        runPipeline(pipeline, done)
     })
     it('find', (done) => {
         const pipeline = compose(
@@ -31,12 +39,7 @@ describe('functors test', () => {
                 as: 'Snow Family'
             }))
         )
-        pipeline(Params())
-            .then((params) => {
-                // console.log(JSON.stringify(params, null, 2))
-                done()
-            })
-            .catch(err => done(err))
+        runPipeline(pipeline, done)
     })
 })
 
