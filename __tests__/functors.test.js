@@ -6,15 +6,15 @@ const {compose, findOne, find, Params} = mongoopose(UserModel)
 
 
 const printToConsole = (params, done) => {
-    // console.log(JSON.stringify(params, null, 2))
+    console.log(JSON.stringify(params, null, 2))
     done()
 }
 
 
 const runPipeline = (pipeline, done) => 
     pipeline(Params())
-        .then(params => printToConsole(params, done)
-        .catch(err => done(err))
+        .then(params => printToConsole(params, done))
+        .catch(err => printToConsole(err, done))
 
 
 beforeEach('connect to db', () => {
@@ -22,8 +22,8 @@ beforeEach('connect to db', () => {
 })
 
               
-describe('functors test', () => {
-    it('findOne', (done) => {
+describe('functors', () => {
+    it('#findOne', (done) => {
         const pipeline = compose(
             findOne(params => Params({
                 select: {email: 'jon-snow@iron-throne.com'},
@@ -32,7 +32,7 @@ describe('functors test', () => {
         )
         runPipeline(pipeline, done)
     })
-    it('find', (done) => {
+    it('#find', (done) => {
         const pipeline = compose(
             find(params => Params({
                 select: {name: {$regex: /Snow/}},

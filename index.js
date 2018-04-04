@@ -9,7 +9,7 @@ const Params = require('./lib/params')
 function pluralize(string) {
     string = string.toLowerCase()
     const lastChar = string.length - 1
-    if (string.indexOf('Y') !== -1 && string[lastChar] === 'Y')
+    if (string.indexOf('y') !== -1 && string[lastChar] === 'y')
         return string.substr(0, lastChar) + 'ies'
     else
         return string + 's'
