@@ -26,14 +26,13 @@ module.exports = {
     model: model => {
         const singular = model.modelName.toLowerCase()
         const plural = pluralize(model.modelName)
-        const {findOne, find, findById, update} = functors(model, singular, plural)
-        return {findOne, find, findById, update}
+        return functors(model, singular, plural)
     },
 
     /**
      * async compose function
      * @param funcs {...Function}
-     * @return {Function}
+     * @return {function(Params): Promise}
      */
     compose: (...funcs) => params => (
         funcs.reduce(
