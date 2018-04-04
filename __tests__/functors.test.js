@@ -22,32 +22,28 @@ beforeEach('connect to db', () => {
 })
 
               
-describe('functors', () => {
+describe('functors tests', () => {
     it('#findOne', (done) => {
-        const pipeline = compose(
-            Model.findOne(params => Params({
-                select: {email: 'jon-snow@iron-throne.com'},
-                as: 'contact'
-            }))
-        )
+        const pipeline = Model.findOne(params => Params({
+            select: {email: 'jon-snow@iron-throne.com'},
+            as: 'contact'
+        }))
         runPipeline(pipeline, done)
     })
     it('#find', (done) => {
-        const pipeline = compose(
-            Model.find(params => Params({
-                select: {name: {$regex: /Snow/}},
-                as: 'Snow Family'
-            }))
-        )
+        const pipeline = Model.find(params => Params({
+            select: {name: {$regex: /Snow/}},
+            as: 'Snow Family'
+        }))
         runPipeline(pipeline, done)
     })
     it('#save', (done) => {
-        const pipeline = compose(
-            Model.save(params => Params({
-                save: {name: 'Arya Stark', email: 'aria-stark@iron-throne.com', password: 'hallo', avatar: 'tomato'},
-                as: 'arya'
-            }))
-        )
+        const userData = {name: 'Arya Stark', email: 'arya-stark@iron-throne.com', password: 'hallo', avatar: 'tomato'}
+        const shouldIntercept = false
+        const pipeline = Model.save(params => Params({
+            save: shouldIntercept ? null : userData,
+            as: 'arya'
+        }))
         runPipeline(pipeline, done)
     })
     it('#findById and #update', (done) => {
@@ -65,8 +61,7 @@ describe('functors', () => {
     })
     it('#remove', (done) => {
         const selectArya = {select: {name: 'Arya Stark'}}
-        const pipeline = compose(Model.remove(params => Params(selectArya)))
-        runPipeline(pipeline, done)
+        runPipeline(Model.remove(params => Params(selectArya)), done)
     })
 })
 
