@@ -1,0 +1,13 @@
+{
+  "name": "mongopose",
+  "version": "0.0.1",
+  "dependencies": {},
+  "scripts": {
+    "test": "mocha ./__tests__"
+  },
+  "devDependencies": {
+    "bcrypt": "^1.0.3",
+    "mocha": "^5.0.5",
+    "mongoose": "^5.0.12"
+  }
+}
