@@ -1,27 +1,17 @@
 const functors = require('./lib/functors')
 const Params = require('./lib/params')
+const {pluralize} = require("./lib/helper");
 
-/**
- * simply pluralize a string
- * @param string {String}
- * @return {String}
- */
-function pluralize(string) {
-    string = string.toLowerCase()
-    const lastChar = string.length - 1
-    if (string.indexOf('y') !== -1 && string[lastChar] === 'y')
-        return string.substr(0, lastChar) + 'ies'
-    else
-        return string + 's'
-}
+
 
 /**
  * @type {{model: (function(Model)), compose: (function(...[Function]): function(Params): Promise), Params: Function}}
  */
 module.exports = {
     /**
+     * @type Function
      * @param model
-     * @return {{findById: Function, findOne: Function, find: Function, update: Function}}
+     * @return {{findById: findById, findOne: findOne, find: find, update: update, save: save}}
      */
     model: model => {
         const singular = model.modelName.toLowerCase()
@@ -31,6 +21,7 @@ module.exports = {
 
     /**
      * async compose function
+     * @type Function
      * @param funcs {...Function}
      * @return {function(Params): Promise}
      */
@@ -43,8 +34,7 @@ module.exports = {
 
     /**
      * Params factory
-     * @param obj
-     * @return {Params}
+     * @type Params
      */
     Params: Params,
 }
