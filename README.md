@@ -69,7 +69,7 @@ See [functors.test.js](./__tests__/functors.test.js) for more examples
 
 # Documentation
 
-- [mongoopose](#exports)
+- [mongoopose](#mongoopose)
 - [Model](#model)
 - [Params](#params)
 
