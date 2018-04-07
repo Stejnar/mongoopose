@@ -31,10 +31,7 @@ In a nutshell... it depends on mongoose, which means you also have a MongoDB set
 
 # Installation
 
-There is no npm package at the moment!</br>
-So this is the way to go:
-
-    npm install git@https://github.com/Stejnar/mongoopose.git
+    npm install @stejnar/mongoopose
 
 # Usage
 
