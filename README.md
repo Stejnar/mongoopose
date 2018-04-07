@@ -123,6 +123,23 @@ Returns:</br>
 
 ## Params
 
+#### Params.as 
+Type: *String* </br>
+Default: mongoose.Model.modelName</br>
+This is the key with that a queries result gets assigned to *Params*.
+ 
+#### Params.select
+Type: Object </br>
+This is the selector that gets passed into mongoose queries.
+
+#### Params.query
+Type: Object </br>
+This is the update object for Model.update()
+
+#### Params.save
+Type: Object </br>
+This gets passed into the mongoose model constructor for Model.save().
+
 #### Params.add()
 
 Parameters:</br>
