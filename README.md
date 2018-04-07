@@ -1,8 +1,5 @@
-# mongoopose
 
-This module provides a simple api, to compose mongoose database queries.
-
-### Table of contents
+# Table of contents
 
 1. [Introduction](#introduction)
 2. [Prerequisites](#prerequisites)
@@ -72,7 +69,7 @@ See [functors.test.js](./__tests__/functors.test.js) for more examples
 
 # Documentation
 
-- [mongoopose](#mongoopose)
+- [mongoopose](#exports)
 - [Model](#model)
 - [Params](#params)
 
