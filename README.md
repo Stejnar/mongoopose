@@ -1,8 +1,5 @@
-# mongoopose
 
-This module provides a simple api, to compose mongoose database queries.
-
-### Table of contents
+# Table of contents
 
 1. [Introduction](#introduction)
 2. [Prerequisites](#prerequisites)
