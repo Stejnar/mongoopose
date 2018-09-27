@@ -38,7 +38,7 @@ declare class Model {
     pipe: Pipeline;
 }
 
-declare module '@stejnar/mongoopose' {
+declare module 'stejnar__mongoopose' {
     import mongoose from 'mongoose';
 
     export function model(model: mongoose.Model<any>): Model;
