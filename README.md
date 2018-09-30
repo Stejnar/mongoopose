@@ -36,7 +36,9 @@ In a nutshell... it depends on mongoose, which means you also have a MongoDB set
 # Usage
 
 Enough talking. Here is some code:
-
+<br/>
+<br/>
+Simple findOne and update example:
 ```javascript
     const mongoopose = require('mongoopose')
     const mongoose = require('mongoose')
@@ -62,6 +64,54 @@ Enough talking. Here is some code:
         .then(params => console.log(params)) // params.user => jon 
         .catch(error => console.error(error))
 ```
+Login routine with express.js:
+```javascript
+router.post('/login', function (req, res) {
+
+    // find user by name and pass as 'user'
+    const findUser = params => Params({ select: { name: params.request.name }, as: 'user' })
+
+    // bycrpt compare action for pipeline
+    const comparePasswords = (resolve, reject, params) => {
+        const { request, user } = params
+        bcrypt.compare(request.password, user.password, (err, same) => {
+            if (same) {
+                const { _id, name } = user
+                resolve(params.add(jwt.sign({ _id, name }, 'ssshhhhh secret'), 'token'))
+            } else if (err) {
+                reject(params.toError({ status: 500 }))
+            } else {
+                reject(params.toError({ status: 403, message: 'Unequal passwords' }))
+            }
+        })
+    }
+
+    // find additional user data
+    const findPhotos = params => Params({ select: { user: params.user._id }, as: 'photos' })
+
+    // initiate pipeline
+    const pipeline = compose(
+        User.findOne(findUser),
+        User.pipe(comparePasswords),
+        User.find(findSketches)
+    )
+
+    // set initial params
+    const params = { request: req.body.payload }
+
+    // handle results or errros
+    pipeline(Params(params))
+        .then(({ user, token, sketches }) => {
+            const { _id: id, name } = user
+            res.success(
+                'Successfully logged in',
+                { user: { id, name }, token, photos }
+            );
+        })
+        .catch(res.error)
+});
+```
+
 See [functors.test.js](./__tests__/functors.test.js) for more examples
 
 # Documentation
