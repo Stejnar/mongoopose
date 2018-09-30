@@ -93,7 +93,7 @@ router.post('/login', function (req, res) {
     const pipeline = compose(
         User.findOne(findUser),
         User.pipe(comparePasswords),
-        User.find(findSketches)
+        Photos.find(findPhotos)
     )
 
     // set initial params
@@ -101,7 +101,7 @@ router.post('/login', function (req, res) {
 
     // handle results or errros
     pipeline(Params(params))
-        .then(({ user, token, sketches }) => {
+        .then(({ user, token, photos }) => {
             const { _id: id, name } = user
             res.success(
                 'Successfully logged in',
