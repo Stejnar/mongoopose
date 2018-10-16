@@ -6,6 +6,8 @@
   "scripts": {
     "test": "mocha ./__tests__"
   },
+  "module": "./index.es.js",
+  "main": "./index.js",
   "devDependencies": {
     "bcrypt": "^1.0.3",
     "chalk": "^2.3.2",
