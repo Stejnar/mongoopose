@@ -32,4 +32,4 @@ userSchema.pre('save', function (next) {
     });
 });
 
-module.exports = userSchema
+module.exports = userSchema;

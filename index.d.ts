@@ -1,33 +1,33 @@
-declare class Params<T> {
+declare class Parameters<T> {
     as: object;
     select: object;
     query: object;
     save: object;
     result: T;
 
-    add(result: object, name: string): Params<any>
-    assign(obj: object): Params<any>
+    add(result: object, name: string): Parameters<any>
+    assign(obj: object): Parameters<any>
     toError(error): Error
 }
 
-type Pipe = (params: Params<any>) => Params<any>;
+type Pipe = (params: Parameters<any>) => Parameters<any>;
 
-type Functor = (query?: (params: Params<any>) => Params<any>) =>
-    (pipe: Params<any>) =>
-        Promise<Params<any>>;
+type Functor = (query?: (params: Parameters<any>) => Parameters<any>) =>
+    (pipe: Parameters<any>) =>
+        Promise<Parameters<any>>;
 
 type Action = (
-    resolve: (params: Params<any>) => void,
+    resolve: (params: Parameters<any>) => void,
     reject: (err: Error) => void,
-    params: Params<any>
+    params: Parameters<any>
 ) => void;
 
 type Pipeline = (
     action: (
-        resolve: (params: Params<any>) => void,
+        resolve: (params: Parameters<any>) => void,
         reject: (err: Error) => void,
-        params: Params<any>) => void
-) => (pipe: Params<any>) => Promise<Params<any>>;
+        params: Parameters<any>) => void
+) => (pipe: Parameters<any>) => Promise<Parameters<any>>;
 
 declare class Model {
     findById: Functor;
@@ -43,7 +43,7 @@ declare module 'stejnar__mongoopose' {
 
     export function model(model: mongoose.Model<any>): Model;
 
-    export function compose(funcs: Functor[] | Pipeline[]): (params: Params<any>) => Promise<Params<any>>;
+    export function compose(funcs: Functor[] | Pipeline[]): (params: Parameters<any>) => Promise<Parameters<any>>;
 
-    export function Params(obj?: object): Params<any>;
+    export function Params(obj?: object): Parameters<any>;
 }

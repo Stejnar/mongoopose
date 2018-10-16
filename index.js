@@ -1,22 +1,41 @@
-const functors = require('./lib/functors')
-const Params = require('./lib/params')
-const {pluralize} = require("./lib/helper");
-
+const functors                   = require('./lib/functors');
+const Params                     = require('./lib/params');
+const { pluralize, flattenDeep } = require("./lib/helper");
 
 
 /**
- * @type {{model: (function(Model)), compose: (function(...[Function]): function(Params): Promise), Params: Function}}
+ * @type {{
+ *     model: (function(Model)),
+ *     compose: (function(...[Function]): function(Params): Promise),
+ *     Parameters: Function
+ * }}
  */
 module.exports = {
     /**
      * @type Function
      * @param model
-     * @return {{findById: findById, findOne: findOne, find: find, update: update, save: save}}
+     * @return {{
+     *     findById: findById,
+     *     findOne: findOne,
+     *     find: find,
+     *     update: update,
+     *     save: save
+     * }}
      */
-    model: model => {
-        const singular = model.modelName.toLowerCase()
-        const plural = pluralize(model.modelName)
-        return functors(model, singular, plural)
+    model: function (model) {
+        if ( !model ) {
+            throw new Error('No Arguments provided. ' + '\n' +
+                'mongoopose.model expects 1 argument of type Mongoose.Model')
+        }
+        if ( !model.modelName ) {
+            throw new Error('Type Error.' + '\n' +
+                'mongoopose.model expects 1 argument of type Mongoose.Model')
+        }
+
+        const singular = model.modelName.toLowerCase();
+        const plural   = pluralize(model.modelName);
+
+        return functors(model, singular, plural);
     },
 
     /**
@@ -25,17 +44,20 @@ module.exports = {
      * @param funcs {...Function}
      * @return {function(Params): Promise}
      */
-    compose: (...funcs) => params => (
-        funcs.reduce(
-            (acc, val) => acc.then(val),
-            Promise.resolve(params)
-        )
-    ),
+    compose: function (...funcs) {
+        return function (params) {
+            funcs = flattenDeep(funcs);
+            return funcs.reduce(
+                (acc, val) => acc.then(val),
+                Promise.resolve(params)
+            );
+        }
+    },
 
     /**
-     * Params factory
+     * Parameters factory
      * @type Params
      */
     Params: Params,
-}
+};
 

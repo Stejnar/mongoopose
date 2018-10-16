@@ -124,21 +124,26 @@ See [functors.test.js](./__tests__/functors.test.js) for more examples
 
 ## mongoopose
 
-#### mongoopose.model()
+#### mongoopose.model(model)
 
 Parameters:</br>
-A model that gets returned from mongoose.model()
+
+- model: Mongoose.Model
 
 Returns:</br>
 *Model*
 
-#### mongoopose.compose()
+#### mongoopose.compose(...funcs)
+You should only pass findById(), findOne(), find(), save(), update(), remove() and/or pipe()
+Nested arrays are allowed, they will get flattened, keeping the original order.
 
 Parameter:</br>
-*...function*, you should only pass findById(), findOne(), find(), save(), update(), remove() and/or pipe()
+
+- funcs: *...function*
 
 Returns:</br>
-*function(Params)*, that returns a *Promise*
+
+*function(Parameters)*, that returns a *Promise*
 
 #### mongoopose.Params
 </br>
@@ -156,68 +161,99 @@ Returns:</br>
 As follows:
 
 Parameter:</br>
-*function(query = Params => Params)*, optional and defaults into no *Params* transformation 
+
+- query: *function(query = Parameters => Parameters)*, </br>
+
+    optional and defaults into no *Parameters* transformation
     
 Returns:</br>
-*function(Params)*, that returns a *Promise*
+
+*function(Parameters)*, that returns a *Promise*
 
 #### Model.pipe()
 
 Parameter:</br>
+
 *function(action)*, action can be any function that gets **resolve**, **reject** and **params** passed into and **calls** resolve or reject 
     
 Returns:</br>
-*function(Params)*, that returns a *Promise*
+
+*function(Parameters)*, that returns a *Promise*
 
 </br>
 
 ## Params
 
-#### Params.as 
+#### Params(obj)
+Type: *Function* </br>
+
+Shorthand for new Parameters().assign(obj)
+
+Parameter:</br>
+
+- obj: *object*
+
+Returns:</br>
+new Instance of *Parameters*
+
+## Parameters
+#### Paramters.as
 Type: *String* </br>
+
 Default: mongoose.Model.modelName</br>
-This is the key with that a queries result gets assigned to *Params*.
+
+This is the key with that a queries result gets assigned to *Parameters*.
  
-#### Params.select
+#### Paramters.select
 Type: Object </br>
+
 This is the selector that gets passed into mongoose queries.
 
-#### Params.query
+#### Paramters.query
 Type: Object </br>
+
 This is the update object for Model.update()
 
-#### Params.save
+#### Paramters.save
 Type: Object </br>
+
 This gets passed into the mongoose model constructor for Model.save().
 
-#### Params.add()
+#### Paramters.add(result, name)
 
 Parameters:</br>
-- result *any*,</br>
-- name *String*, this is the key with that **result** gets assigned to *Params*
+- result: *any*,</br>
+- name: *String*, this is the key with that **result** gets assigned to *Parameters*
 
 
 Returns:</br>
-*Params*
+
+*Parameters*
 
 </br>
 
-#### Params.assign()
+#### Parameters.assign(obj)
+Type: Function </br>
+
+Resets the Parameters.as key to undefined and merges *obj* into it.
 
 Parameters:</br>
-obj, *any*
+- obj: *any*
 
 Returns:</br>
-*Params*
+
+*Parameters*
 
 </br>
 
-#### Params.toError()
+#### Parameters.toError(msg)
+
+Wraps this instance of Parameters into an Error.
 
 Parameters:</br>
-- result *any*,</br>
-- name *String*
+- msg: *object* | *string*,</br>
 
 
 Returns:</br>
+
 *Error* 
